@@ -1,4 +1,4 @@
-﻿//*************************************************************************************
+//*************************************************************************************
 //*Практическая работа №13                                                            *
 //* Выполнила: Вохмянина А.Р., группа 2-ИСП                                           *
 //* Задание: разработка программ с применением рекурсивных функций                    *
@@ -11,15 +11,15 @@ namespace работа_13
     {
         static string DoubleLettersRecursive(string text)
         {
-            if (text.Length == 0)
+            if (text.Length == 0) // условие остановки рекурсии
             {
                 return "";
             }
 
-            char firstChar = text[0];
-            string result = $"{firstChar}{firstChar}";
+            char firstChar = text[0]; // полуячение первого символа
+            string result = $"{firstChar}{firstChar}"; // удвоение символа
 
-            return result + DoubleLettersRecursive(text.Substring(1));
+            return result + DoubleLettersRecursive(text.Substring(1)); // рекурсивный вызов
         }
 
         static void Main(string[] args)
@@ -32,29 +32,29 @@ namespace работа_13
             Console.WriteLine("---Программа удвоения символов---");
             Console.WriteLine("Здравствуйте!");
 
-            string userInput = "";
+            string userInput = String.Empty; 
 
             try
             {
-                while (string.IsNullOrWhiteSpace(userInput))
+                while (String.IsNullOrWhiteSpace(userInput)) // проверка ввода
                 {
                     Console.Write("Введите строку: ");
                     userInput = Console.ReadLine();
 
-                    if (string.IsNullOrWhiteSpace(userInput))
+                    if (String.IsNullOrWhiteSpace(userInput))
                     {
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine("Ошибка! Строка не должна быть пустой.");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("Попробуйте еще раз.");
 
-                        userInput = "";
+                        userInput = String.Empty;
                     }
                 }
 
-                string result = DoubleLettersRecursive(userInput);
+                string result = DoubleLettersRecursive(userInput); // вызов рекурсивной функции
 
-                Console.WriteLine($"Результат: {result}");
+                Console.WriteLine($"Результат: {result}"); // вывод результата
             }
             catch (ArgumentException aex)
             {
@@ -72,4 +72,6 @@ namespace работа_13
             Console.ReadKey();
         }
     }
+}
+
 }

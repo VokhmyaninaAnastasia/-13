@@ -16,7 +16,7 @@ namespace работа_13
                 return "";
             }
 
-            char firstChar = text[0]; // полуячение первого символа
+            char firstChar = text[0]; // получение первого символа
             string result = $"{firstChar}{firstChar}"; // удвоение символа
 
             return result + DoubleLettersRecursive(text.Substring(1)); // рекурсивный вызов
@@ -32,46 +32,48 @@ namespace работа_13
             Console.WriteLine("---Программа удвоения символов---");
             Console.WriteLine("Здравствуйте!");
 
-            string userInput = String.Empty; 
+            string userInput = String.Empty;
+            bool repeat = true;
 
-            try
+            do
             {
-                while (String.IsNullOrWhiteSpace(userInput)) // проверка ввода
+                try
                 {
-                    Console.Write("Введите строку: ");
-                    userInput = Console.ReadLine();
-
-                    if (String.IsNullOrWhiteSpace(userInput))
+                    userInput = String.Empty; // сбрасываем перед новым вводом
+                    while (String.IsNullOrWhiteSpace(userInput)) 
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("Ошибка! Строка не должна быть пустой.");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.WriteLine("Попробуйте еще раз.");
+                        Console.Write("Введите строку: ");
+                        userInput = Console.ReadLine();
 
-                        userInput = String.Empty;
+                        if (String.IsNullOrWhiteSpace(userInput))
+                        {
+                            throw new ArgumentException("Строка не должна быть пустой.");
+                        }
                     }
+                    string result = DoubleLettersRecursive(userInput);
+                    Console.WriteLine($"Результат: {result}"); 
                 }
+                catch (ArgumentException aex)
+                {
+                    HandleError(aex);
+                }
+                catch (Exception ex)
+                {
+                    HandleError(ex);
+                }
+                Console.Write("\nХотите продолжить выполнять программу? (да/нет) ");
+                string answer = Console.ReadLine();
+                repeat = (answer == "да" || answer == "д");
 
-                string result = DoubleLettersRecursive(userInput); // вызов рекурсивной функции
-
-                Console.WriteLine($"Результат: {result}"); // вывод результата
-            }
-            catch (ArgumentException aex)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Ошибка аргумента: " + aex.Message);
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Непредвиденная ошибка: " + ex.Message);
-                Console.ForegroundColor = ConsoleColor.White;
-            }
+            } while (repeat);
 
             Console.ReadKey();
         }
+        static void HandleError(Exception ex)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Ошибка: " + ex.Message);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
     }
-}
-
 }
